@@ -1,0 +1,6 @@
+#run
+node_modules/
+
+#config
+.config.js
+data/
