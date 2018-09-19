@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable no-await-in-loop */
 
-const Utils = require('../utils.js');
+const Utils = require('../utils');
 
 /**
   * Bumps the project version in package.json files
@@ -9,7 +9,7 @@ const Utils = require('../utils.js');
   * @since 0.1.0
   * @author Tektiv
   * @arg {Number} version - Project's new version
-  * 
+  *
   * @command
   * node scripts/bump_version.js 0.1.1
   */

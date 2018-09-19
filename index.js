@@ -16,7 +16,7 @@ client.on('ready', () => {
 
 // Triggered when a user sends a message
 client.on('message', (message) => {
-  /** 
+  /**
     * Stops if :
     * - It is a direct message to the bot
     * - It is a message from the bot - you don't want him to enter an infinite loop

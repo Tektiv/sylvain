@@ -18,7 +18,6 @@ modules.forEach((module) => {
 });
 
 
-
 /**
   * Default function when no specific command has been called
   * Useful for triggers on specific word
@@ -27,7 +26,7 @@ modules.forEach((module) => {
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !ping
   */

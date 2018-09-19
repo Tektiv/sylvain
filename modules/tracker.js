@@ -1,6 +1,6 @@
 const Utils = require('../utils');
 
-// Array containing the fighters with their initiative 
+// Array containing the fighters with their initiative
 // and whether they are the current fighter or not
 const tracker = [];
 
@@ -37,7 +37,7 @@ const readTracker = () => {
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !track Aragorn, Gimli, Boromir, Wolf 2, Wolf 2
   *

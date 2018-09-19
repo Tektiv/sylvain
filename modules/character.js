@@ -8,7 +8,7 @@ const Utils = require('../utils');
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !call aragorn
   */
@@ -67,7 +67,7 @@ const activateCharacter = async (client, message) => {
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !claim aragorn
   */
@@ -127,7 +127,7 @@ const claimCharacter = async (client, message) => {
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !characters
   */
