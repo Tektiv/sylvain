@@ -4,18 +4,19 @@
 - Tracking a fight (initiative and turns)
 - _... and more to come_
 
-The bot is not hosted, tough not public, yet.  
-This is a `0.x` release since I still have some idead to implement like a music/ambiance vocal channel when in session.
+The bot is not hosted, though not public, yet.  
+This is a `0.x` release since I still have some ideas to implement like a music/ambiance vocal channel when in session.
 
 ### Incoming features
 - `!loot <challenge rating>` to give a random list of loot based on a group challenge ratings
 - `!macro` function to easily make rolls, based on the user calling the function
+- `!map` / `!hint` to help the GM
 #### [Any idea/suggestion is welcome !](https://github.com/Tektiv/sylvain/issues)
 
-## Development
+## Running
 Follow these instructions to make it run :
 1. Make sure you have node/npm installed
-2. Fork the repository
+2. Clone the repository or download the archive
 3. Go into the root folder (where you can see [package.json](package.json))
 4. Run `npm install`
 5. Go to [this link](https://discordapp.com/developers/applications/) to create your bot and generate a identifier token
@@ -23,6 +24,7 @@ Follow these instructions to make it run :
 7. Run `npm start` and you should see the following
    > Logged in as <name>#1234 !
 
+### Development
 If you want to add your contribution, first thank you !  
 You can check the modules already created in the [modules](modules/) directory if your idea is related to one of the existing modules. If that is the case, jump directly to step 3.
 
@@ -36,5 +38,5 @@ You can check the modules already created in the [modules](modules/) directory i
       <command>: <function>,
    }
    ```
-4. Run `npm start` again to see your changes !  
-   _You can run `npm run dev` to see your changes as you develop, using nodemon_
+4. Run `npm start` again to see your changes !
+   _You can run `npm run dev` to see your changes while you develop, using nodemon_
