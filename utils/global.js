@@ -92,14 +92,15 @@ exports.capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
   * @param {String} sub - Substring to insert
   * @returns {String} result - String with the substring inserted
   */
-exports.splice = (str, start, del, sub) => str.slice(0, start) + sub + str.slice(start + Math.abs(del));
+exports.splice = (str, start, del, sub) =>
+  str.slice(0, start) + sub + str.slice(start + Math.abs(del));
 
 /**
   * Returns whether a key is in object or not
   *
   * @since 0.1.0
   * @author Tektiv
-  * @param {Object} objecy
+  * @param {Object} object
   * @param {String} key
   * @returns {Boolean} bool - returns true if the object has the key, else it returns false
   */

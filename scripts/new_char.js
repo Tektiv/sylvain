@@ -12,7 +12,7 @@ const Utils = require('../utils');
   *
   * @since 0.1.0
   * @author Tektiv
-  * 
+  *
   * @command
   * node scripts/new_char.js
   */

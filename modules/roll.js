@@ -7,7 +7,7 @@ const Utils = require('../utils');
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !choose "go left" "go right" "take the ladder"
   */
@@ -32,7 +32,7 @@ const chooseForMe = async (client, message) => {
   * @author Tektiv
   * @param {Client} client - Starting point of the bot
   * @param {Message} message - Message triggering the command
-  * 
+  *
   * @command
   * !roll 1d20 - 5
 
@@ -65,7 +65,6 @@ const rollDice = async (client, message) => {
       message.channel.send('You have no assigned characters');
       return;
     }
-    console.log(character);
     if (Utils.objectIncludes(character.skills, args[0])) {
       const skill = character.skills[args[0]];
       const roll = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);

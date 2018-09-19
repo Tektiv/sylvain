@@ -15,11 +15,9 @@ const rl = readline.createInterface({
   * @param {String} question - Question to display before the input
   * @returns {String} answer - Returns the answer given by the user
   */
-exports.ask = async (question) => {
-  return await new Promise((resolve) => {
-    rl.question(`\n${question}\n> `, answer => resolve(answer.trim()));
-  });
-};
+exports.ask = async question => new Promise((resolve) => {
+  rl.question(`\n${question}\n> `, answer => resolve(answer.trim()));
+});
 
 /**
   * Checks if a file exists
@@ -29,14 +27,12 @@ exports.ask = async (question) => {
   * @param {String} filePath - Path of the file to check
   * @returns {Boolean} exists - Returns whether the file exists or not
   */
-exports.fileExists = async (filePath) => {
-  return await new Promise ((resolve) => {
-    fs.stat(filePath, (err) => {
-      if (err !== null) resolve(false);
-      resolve(true);
-    });
+exports.fileExists = async filePath => new Promise((resolve) => {
+  fs.stat(filePath, (err) => {
+    if (err !== null) resolve(false);
+    resolve(true);
   });
-};
+});
 
 /**
   * Creates a directory
@@ -46,14 +42,12 @@ exports.fileExists = async (filePath) => {
   * @param {String} filePath - Path of the directory to create
   * @returns {Boolean} created - Returns whether the folder has been created or not
   */
-exports.mkdir = async (filePath) => {
-  return await new Promise ((resolve) => {
-    fs.mkdir(filePath, (err) => {
-      if (err !== null) resolve(false);
-      resolve(true);
-    });
+exports.mkdir = async filePath => new Promise((resolve) => {
+  fs.mkdir(filePath, (err) => {
+    if (err !== null) resolve(false);
+    resolve(true);
   });
-}
+});
 
 /**
   * Reads a file
@@ -64,14 +58,12 @@ exports.mkdir = async (filePath) => {
   * @param {Boolean} toJSON - Set to true if you want to parse the result to a JSON object
   * @returns {String|Object} content - Returns the content of the file
   */
-exports.readFile = async (filePath, toJSON = false) => {
-  return await new Promise ((resolve) => {
-    fs.readFile(filePath, 'utf8', (err, content) => {
-      if (err !== null) resolve(false);
-      resolve(toJSON ? JSON.parse(content) : content);
-    });
+exports.readFile = async (filePath, toJSON = false) => new Promise((resolve) => {
+  fs.readFile(filePath, 'utf8', (err, content) => {
+    if (err !== null) resolve(false);
+    resolve(toJSON ? JSON.parse(content) : content);
   });
-};
+});
 
 /**
   * Writes in a file, replaces what is already written in it
@@ -82,14 +74,12 @@ exports.readFile = async (filePath, toJSON = false) => {
   * @param {String} content - Content to write
   * @returns {Boolean} result - Returns whether the file has been created/modified or not
   */
-exports.writeFile = async (filePath, content) => {
-  return await new Promise((resolve) => {
-    fs.writeFile(filePath, content, (err) => {
-      if (err !== null) resolve(false);
-      resolve(true);
-    });
-  })
-};
+exports.writeFile = async (filePath, content) => new Promise((resolve) => {
+  fs.writeFile(filePath, content, (err) => {
+    if (err !== null) resolve(false);
+    resolve(true);
+  });
+});
 
 /**
   * Edit a .json file using a function given in parameters
@@ -99,7 +89,7 @@ exports.writeFile = async (filePath, content) => {
   * @param {String} filePath - Path of the .json file to edit
   * @param {Function} editJSON - Function to edit the json
   *   The function needs to take the json as a parameter, and returns it
-  * @param {Function} editString - Function to edit how the JSON string is formatted (indentation, etc)
+  * @param {Function} editString - Function to edit how the JSON string is formatted
   * @returns {Boolean} result - Returns whether the file has been modified or not
   */
 exports.editJSONFile = async (filePath, editJSON, editString = false) => {
@@ -119,7 +109,7 @@ exports.editJSONFile = async (filePath, editJSON, editString = false) => {
   if (editString) {
     let stringified = JSON.stringify(content, null, 2);
     stringified = editString(stringified);
-    return await this.writeFile(filePath, stringified);
+    return this.writeFile(filePath, stringified);
   }
-  return await this.writeFile(filePath, JSON.stringify(content, null, 2));
+  return this.writeFile(filePath, JSON.stringify(content, null, 2));
 };

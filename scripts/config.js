@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const Utils = require('../utils.js');
+const Utils = require('../utils');
 
 /**
   * Starts the project config before the first use
@@ -10,7 +10,7 @@ const Utils = require('../utils.js');
   *
   * @since 0.1.0
   * @author Tektiv
-  * 
+  *
   * @command
   * node scripts/config.js
   */

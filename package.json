@@ -1,6 +1,6 @@
 {
   "name": "sylvain",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Discord bot for DnD tools & utilities",
   "main": "index.js",
   "scripts": {

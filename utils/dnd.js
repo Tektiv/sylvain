@@ -27,11 +27,11 @@ exports.classes = {
   druid: ['intelligence', 'wisdom'],
   fighter: ['strength', 'constitution'],
   monk: ['strength', 'dexterity'],
-  cleric: ['wisdom', 'charisma'],
+  paladin: ['wisdom', 'charisma'],
   ranger: ['strength', 'dexterity'],
   rogue: ['dexterity', 'intelligence'],
   sorceler: ['constitution', 'charisma'],
-  cleric: ['wisdom', 'charisma'],
+  warlock: ['wisdom', 'charisma'],
   wizard: ['intelligence', 'wisdom'],
 };
 
@@ -47,58 +47,58 @@ exports.attributes = [
 
 // List of the 18 skills and their related attribute
 exports.skills = {
-  'acrobatics': {
+  acrobatics: {
     parent: 'dexterity',
   },
-  'animal_handling': {
+  animal_handling: {
     parent: 'wisdom',
   },
-  'arcana': {
+  arcana: {
     parent: 'intelligence',
   },
-  'athletics': {
+  athletics: {
     parent: 'strength',
   },
-  'deception': {
+  deception: {
     parent: 'charisma',
   },
-  'history': {
+  history: {
     parent: 'intelligence',
   },
-  'insight': {
+  insight: {
     parent: 'wisdom',
   },
-  'intimidation': {
+  intimidation: {
     parent: 'charisma',
   },
-  'investigation': {
+  investigation: {
     parent: 'intelligence',
   },
-  'medecine': {
+  medecine: {
     parent: 'wisdom',
   },
-  'nature': {
+  nature: {
     parent: 'intelligence',
   },
-  'perception': {
+  perception: {
     parent: 'wisdom',
   },
-  'performance': {
+  performance: {
     parent: 'charisma',
   },
-  'persuasion': {
+  persuasion: {
     parent: 'charisma',
   },
-  'religion': {
+  religion: {
     parent: 'intelligence',
   },
-  'sleight_of_hand': {
+  sleight_of_hand: {
     parent: 'dexterity',
   },
-  'stealth': {
+  stealth: {
     parent: 'dexterity',
   },
-  'survival': {
+  survival: {
     parent: 'wisdom',
   },
 };
@@ -128,7 +128,7 @@ exports.getActiveCharacter = async (userId) => {
   * @param {Number} value - Attribute value (theorically 1 to 20)
   * @returns {Number} modif - Modificator value related
   */
-exports.getModif = (value) => Math.trunc(value / 2) - 5;
+exports.getModif = value => Math.trunc(value / 2) - 5;
 
 /**
   * Rolls a dice and returns the result with calculation
