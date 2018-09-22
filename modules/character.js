@@ -140,7 +140,7 @@ const listCharacters = async (client, message) => {
     const character = characters[key];
     let claimed = '';
     if (character.player !== '') {
-      claimed = `claimed by _${Utils.usernameById(client, character.player)}_`;
+      claimed = `claimed by _${Utils.username(Utils.memberById(client, character.player))}_`;
     } else {
       claimed = 'not claimed';
     }

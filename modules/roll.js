@@ -65,8 +65,8 @@ const rollDice = async (client, message) => {
       message.channel.send('You have no assigned characters');
       return;
     }
-    if (Utils.objectIncludes(character.skills, args[0])) {
-      const skill = character.skills[args[0]];
+    if (Utils.objectIncludes(character.stats, args[0])) {
+      const skill = character.stats[args[0]];
       const roll = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);
       if (content.endsWith(' a') || content.endsWith(' d')) {
         const roll2 = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);
