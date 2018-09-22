@@ -2,6 +2,7 @@ const Utils = require('../utils');
 
 // All the modules needed have to be in the array
 const modules = [
+  './ready',
   './character',
   './roll',
   './tracker',

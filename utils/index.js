@@ -15,3 +15,21 @@ utils.forEach((util) => {
     exports[functionName] = library[functionName];
   });
 });
+
+
+// All the classes needed have to be in the array
+const modelFiles = [
+  'game',
+  'stat',
+  'character',
+];
+
+// We export every class as our own
+// So that we can easily access as `Utils.<class>` and not as `Utils.Class.<module>.<class>`
+modelFiles.forEach((modelFile) => {
+  // eslint-disable-next-line
+  const file = require(`./classes/${modelFile}`);
+  Object.keys(file).forEach((model) => {
+    exports[model] = file[model];
+  });
+});
