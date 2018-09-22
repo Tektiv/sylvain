@@ -6,14 +6,19 @@ class Game {
 }
 
 class Player {
-  constructor(game, user) {
+  constructor(game, member) {
     this.game = game;
-    this.user = user;
+    this.member = member;
     this.character = null;
   }
 
   setCurrentCharacter(character) {
-    this.character = character;
+    const char = character;
+    if (this.character !== null) {
+      this.character.player = null;
+    }
+    this.character = char;
+    char.player = this;
   }
 }
 

@@ -11,11 +11,11 @@ const app = express();
 const { Game } = Utils;
 
 // Triggered on wake up
-client.on('ready', () => {
+client.on('ready', async () => {
   client.user.setActivity('D&D 5e');
   console.log(`Logged in as ${client.user.tag} !`);
   Utils.game.info = new Game(1, client.guilds.first());
-  modules.importData(client);
+  await modules.importData(client);
 });
 
 // Triggered when a user sends a message

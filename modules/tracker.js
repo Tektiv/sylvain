@@ -78,13 +78,12 @@ const fightTracker = async (client, message) => {
       let ini = +element.split(' ')[1] || false;
 
       if (!ini) {
-        // eslint-disable-next-line no-await-in-loop
-        const characters = await Utils.readFile('./data/character.json', true);
-        if (!Utils.objectIncludes(characters, name)) {
+        if (!Utils.objectIncludes(Utils.game.characters, name)) {
           message.channel.send(`Name code **${name}** not found, see the list using \`!characters\``);
           return;
         }
-        ({ name, ini } = characters[name]);
+        ini = Utils.game.characters[name].stats.dexterity.getModificator();
+        ({ name } = Utils.game.characters[name]);
       }
 
       name = Utils.capitalize(name);

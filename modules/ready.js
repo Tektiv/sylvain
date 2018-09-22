@@ -13,6 +13,7 @@ const importData = async (client) => {
     const char = new Character(
       Utils.game.info,
       character.fullName,
+      character.name,
       character.race,
       character.class,
     );
@@ -29,14 +30,13 @@ const importData = async (client) => {
   const players = await Utils.readFile('./data/player.json', true);
   Object.entries(players).forEach(([id, data]) => {
     const player = new Player(Utils.game.info, Utils.memberById(client, id));
-    player.setCurrentCharacter(Utils.game.characters[data.active]);
+    player.setCurrentCharacter(Utils.game.characters[data.character]);
     Utils.game.players[id] = player;
   });
 };
 
 /**
-  * Exports linking a command to a specific function
-  * e.g. 'roll' command triggers the `rollDice` function
+  * Exports boot/ready functions
   */
 module.exports = {
   importData,
