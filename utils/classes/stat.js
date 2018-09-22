@@ -6,7 +6,7 @@ class Attribute {
     this.savingThrow = savingThrow;
   }
 
-  getModif() {
+  getModificator() {
     return this.modificator;
   }
 }
@@ -18,7 +18,7 @@ class Skill {
     this.proficiency = proficiency;
   }
 
-  getModif() {
+  getModificator() {
     return this.attribute.modificator + (this.proficiency ? 2 : 0);
   }
 }

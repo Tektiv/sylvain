@@ -55,28 +55,29 @@ const rollDice = async (client, message) => {
       } else {
         winner = roll.total > roll2.total ? roll2 : roll;
       }
-      message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nCe qui donne **${winner.total}**`);
+      message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
     } else {
       message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
     }
   } else {
-    const character = await Utils.getActiveCharacter(message.author.id);
-    if (character === 0 || character === -1) {
+    const player = Utils.game.players[message.author.id];
+    if (player === undefined || player.character === null) {
       message.channel.send('You have no assigned characters');
       return;
     }
+    const { character } = player;
     if (Utils.objectIncludes(character.stats, args[0])) {
-      const skill = character.stats[args[0]];
-      const roll = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);
+      const stat = character.stats[args[0]];
+      const roll = await Utils.roll(`1d20 ${stat.getModificator() >= 0 ? '+' : '-'} ${Math.abs(stat.getModificator())}`);
       if (content.endsWith(' a') || content.endsWith(' d')) {
-        const roll2 = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);
+        const roll2 = await Utils.roll(`1d20 ${stat.getModificator() >= 0 ? '+' : '-'} ${Math.abs(stat.getModificator())}`);
         let winner = {};
         if (content.endsWith(' a')) {
           winner = roll.total < roll2.total ? roll2 : roll;
         } else {
           winner = roll.total > roll2.total ? roll2 : roll;
         }
-        message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nCe qui donne **${winner.total}**`);
+        message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
       } else {
         message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
       }
