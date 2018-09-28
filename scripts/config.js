@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const Utils = require('../utils');
+const System = require('../utils/system');
 
 /**
   * Starts the project config before the first use
@@ -18,24 +18,24 @@ const Utils = require('../utils');
   try {
     process.chdir(`${__dirname}/..`);
 
-    if (await Utils.fileExists('./.config.js')) {
+    if (await System.fileExists('./.config.js')) {
       console.log('config file found');
     } else {
-      const token = await Utils.ask('Your discord bot token ?');
-      const randomKey = await Utils.ask('Your random.org api key ? (not mandatory, leave empty if none)');
-      let port = await Utils.ask('Do you want to use a specific port ? (default 9090)');
+      const token = await System.ask('Your discord bot token ?');
+      const randomKey = await System.ask('Your random.org api key ? (not mandatory, leave empty if none)');
+      let port = await System.ask('Do you want to use a specific port ? (default 9090)');
       if (port === '') port = 9090;
 
       const configFile = `exports.token = '${token}';\nexports.randomApiKey = '${randomKey}';\nexports.port = ${port};\n`;
-      await Utils.writeFile('./.config.js', configFile);
+      await System.writeFile('./.config.js', configFile);
 
       console.log('config file created');
     }
 
-    if (await Utils.fileExists('./data')) {
+    if (await System.fileExists('./data')) {
       console.log('data folder found');
     } else {
-      await Utils.mkdir('data');
+      await System.mkdir('data');
       console.log('data folder created');
     }
 
@@ -48,10 +48,10 @@ const Utils = require('../utils');
 
     await Promise.all(dataFiles.map(async (file) => {
       const name = file.replace(/^\.\/(\S*)\.json$/, '$1s');
-      if (await Utils.fileExists(file)) {
+      if (await System.fileExists(file)) {
         console.log(`  ${name} file found`);
       } else {
-        await Utils.writeFile(file, '{}');
+        await System.writeFile(file, '{}');
         console.log(`  ${name} file created`);
       }
     }));
