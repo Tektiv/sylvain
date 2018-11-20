@@ -44,11 +44,11 @@ const rollDice = async (client, message) => {
   content = content.substring(`${Utils.prefix}roll `.length).trim();
   const args = content.split(' ');
 
-  const regex = /^(?:(?:\d+(?:d\d+|))(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
+  const regex = /^(?:(?:\d+(?:d\d+|)|[a-z]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
   if (regex.test(content)) {
-    const roll = await Utils.roll(content);
+    const roll = await Utils.roll(content, message.author.id);
     if (content.endsWith('a') || content.endsWith('d')) {
-      const roll2 = await Utils.roll(content);
+      const roll2 = await Utils.roll(content, message.author.id);
       let winner = {};
       if (content.endsWith('a')) {
         winner = roll.total < roll2.total ? roll2 : roll;
@@ -58,29 +58,6 @@ const rollDice = async (client, message) => {
       message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
     } else {
       message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
-    }
-  } else {
-    const player = Utils.game.players[message.author.id];
-    if (player === undefined || player.character === null) {
-      message.channel.send('You have no assigned characters');
-      return;
-    }
-    const { character } = player;
-    if (Utils.objectIncludes(character.stats, args[0])) {
-      const stat = character.stats[args[0]];
-      const roll = await Utils.roll(`1d20 ${stat.getModificator() >= 0 ? '+' : '-'} ${Math.abs(stat.getModificator())}`);
-      if (content.endsWith(' a') || content.endsWith(' d')) {
-        const roll2 = await Utils.roll(`1d20 ${stat.getModificator() >= 0 ? '+' : '-'} ${Math.abs(stat.getModificator())}`);
-        let winner = {};
-        if (content.endsWith(' a')) {
-          winner = roll.total < roll2.total ? roll2 : roll;
-        } else {
-          winner = roll.total > roll2.total ? roll2 : roll;
-        }
-        message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
-      } else {
-        message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
-      }
     }
   }
 };
