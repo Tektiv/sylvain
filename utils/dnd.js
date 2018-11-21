@@ -111,13 +111,13 @@ exports.skills = {
   * @param {String} id - ID of a member of the server
   * @returns {Object} character - Active character of the user
   */
-exports.getActiveCharacter = async (userId) => {
+exports.getCharacter = async (userId) => {
   const players = await System.readFile('./data/player.json', true);
   const characters = await System.readFile('./data/character.json', true);
 
-  if (!Globals.objectIncludes(players, userId)) return -1;
-  if (!players[userId].active) return 0;
-  return characters[players[userId].active];
+  if (!Globals.objectIncludes(Globals.game.players, userId)) return -1;
+  if (!Globals.game.players[userId].character) return 0;
+  return Globals.game.players[userId].character;
 };
 
 /**
@@ -141,7 +141,7 @@ exports.getModif = value => Math.trunc(value / 2) - 5;
   *   e.g. 1d20 + 5 a
   * @returns {Object} result - Returns the result, with the calculation
   */
-exports.roll = async (request, player) => {
+exports.roll = async (request, message) => {
   const elements = request.split(/[ +-]+/g);
   if (request.endsWith('a') || request.endsWith('d')) elements.pop();
   const separators = request.split('').filter(c => (c === ('+') || c === ('-'))).join('');
@@ -165,17 +165,17 @@ exports.roll = async (request, player) => {
       result.steps.push(`(${data.join(' + ')})`);
       results.push(+data.reduce((a, b) => a + b));
     } else {
-      const character = await this.getActiveCharacter(player);
+      const character = await this.getCharacter(message.author.id);
       if (character === 0 || character === -1) {
         message.channel.send('You have no assigned character');
         return false;
       }
 
-      if (Globals.objectIncludes(character.skills, element)) {
-        const skill = character.skills[element];
-        const data = [+await Globals.random(1, 20, 1), +skill[1]];
+      if (Globals.objectIncludes(character.stats, element)) {
+        const skill = character.stats[element];
+        const data = [+await Globals.random(1, 20, 1), +skill.getModificator()];
 
-        result.steps.push(`(${data[0]}) + ${data[1]}`);
+        result.steps.push(`[ (${data[0]}) + ${data[1]} ]`);
         results.push(data.reduce((a, b) => a + b));
       }
     }
