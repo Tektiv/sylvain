@@ -44,20 +44,22 @@ const rollDice = async (client, message) => {
   content = content.substring(`${Utils.prefix}roll `.length).trim();
   const args = content.split(' ');
 
-  const regex = /^(?:(?:\d+(?:d\d+|)|[a-z]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
+  const regex = /^(?:(?:\d+(?:d|D\d+|)|[a-zA-Z]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
   if (regex.test(content)) {
-    const roll = await Utils.roll(content, message.author.id);
-    if (content.endsWith('a') || content.endsWith('d')) {
-      const roll2 = await Utils.roll(content, message.author.id);
-      let winner = {};
-      if (content.endsWith('a')) {
-        winner = roll.total < roll2.total ? roll2 : roll;
+    const roll = await Utils.roll(content, message);
+    if (roll) {
+      if (content.endsWith('a') || content.endsWith('d')) {
+        const roll2 = await Utils.roll(content, message);
+        let winner = {};
+        if (content.endsWith('a')) {
+          winner = roll.total < roll2.total ? roll2 : roll;
+        } else {
+          winner = roll.total > roll2.total ? roll2 : roll;
+        }
+        message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
       } else {
-        winner = roll.total > roll2.total ? roll2 : roll;
+        message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
       }
-      message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
-    } else {
-      message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
     }
   }
 };
