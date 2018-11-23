@@ -44,39 +44,19 @@ const rollDice = async (client, message) => {
   content = content.substring(`${Utils.prefix}roll `.length).trim();
   const args = content.split(' ');
 
-  const regex = /^(?:(?:\d+(?:d\d+|))(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
+  const regex = /^(?:(?:\d+(?:d|D\d+|)|[a-zA-Z]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
   if (regex.test(content)) {
-    const roll = await Utils.roll(content);
-    if (content.endsWith('a') || content.endsWith('d')) {
-      const roll2 = await Utils.roll(content);
-      let winner = {};
-      if (content.endsWith('a')) {
-        winner = roll.total < roll2.total ? roll2 : roll;
-      } else {
-        winner = roll.total > roll2.total ? roll2 : roll;
-      }
-      message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nCe qui donne **${winner.total}**`);
-    } else {
-      message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
-    }
-  } else {
-    const character = await Utils.getActiveCharacter(message.author.id);
-    if (character === 0 || character === -1) {
-      message.channel.send('You have no assigned characters');
-      return;
-    }
-    if (Utils.objectIncludes(character.skills, args[0])) {
-      const skill = character.skills[args[0]];
-      const roll = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);
-      if (content.endsWith(' a') || content.endsWith(' d')) {
-        const roll2 = await Utils.roll(`1d20 ${skill[1] >= 0 ? '+' : '-'} ${Math.abs(skill[1])}`);
+    const roll = await Utils.roll(content, message);
+    if (roll) {
+      if (content.endsWith('a') || content.endsWith('d')) {
+        const roll2 = await Utils.roll(content, message);
         let winner = {};
-        if (content.endsWith(' a')) {
+        if (content.endsWith('a')) {
           winner = roll.total < roll2.total ? roll2 : roll;
         } else {
           winner = roll.total > roll2.total ? roll2 : roll;
         }
-        message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nCe qui donne **${winner.total}**`);
+        message.channel.send(`${roll.steps.join(' ')} = *${roll.total}*\n${roll2.steps.join(' ')} = *${roll2.total}*\nWhich gives **${winner.total}**`);
       } else {
         message.channel.send(`${roll.steps.join(' ')} = **${roll.total}**`);
       }

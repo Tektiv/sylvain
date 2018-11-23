@@ -111,13 +111,10 @@ exports.skills = {
   * @param {String} id - ID of a member of the server
   * @returns {Object} character - Active character of the user
   */
-exports.getActiveCharacter = async (userId) => {
-  const players = await System.readFile('./data/player.json', true);
-  const characters = await System.readFile('./data/character.json', true);
-
-  if (!Globals.objectIncludes(players, userId)) return -1;
-  if (!players[userId].active) return 0;
-  return characters[players[userId].active];
+exports.getCharacter = async (userId) => {
+  if (!Globals.objectIncludes(Globals.game.players, userId)) return -1;
+  if (!Globals.game.players[userId].character) return 0;
+  return Globals.game.players[userId].character;
 };
 
 /**
@@ -141,7 +138,7 @@ exports.getModif = value => Math.trunc(value / 2) - 5;
   *   e.g. 1d20 + 5 a
   * @returns {Object} result - Returns the result, with the calculation
   */
-exports.roll = async (request) => {
+exports.roll = async (request, message) => {
   const elements = request.split(/[ +-]+/g);
   if (request.endsWith('a') || request.endsWith('d')) elements.pop();
   const separators = request.split('').filter(c => (c === ('+') || c === ('-'))).join('');
@@ -157,21 +154,35 @@ exports.roll = async (request) => {
     if (/^\d+$/.test(element)) {
       results.push(+element);
       result.steps.push(`${element}`);
-    } else {
+    } else if (/^(\d+)d(\d+)$/.test(element)) {
       const parts = element.match(/^(\d+)d(\d+)$/);
       // eslint-disable-next-line no-await-in-loop
       const data = await Globals.random(1, parts[2], parts[1]);
 
       result.steps.push(`(${data.join(' + ')})`);
       results.push(+data.reduce((a, b) => a + b));
+    } else {
+      const character = await this.getCharacter(message.author.id);
+      if (character === 0 || character === -1) {
+        message.channel.send('You have no assigned character');
+        return false;
+      }
+
+      if (Globals.objectIncludes(character.stats, element)) {
+        const skill = character.stats[element];
+        const data = [+await Globals.random(1, 20, 1), +skill.getModificator()];
+
+        result.steps.push(`[ (${data[0]}) + ${data[1]} ]`);
+        results.push(data.reduce((a, b) => a + b));
+      }
     }
 
     if (separators[i]) result.steps.push(`${separators[i]}`);
-  }
 
-  result.total = +results[0];
-  for (let i = 1; i < results.length; i += 1) {
-    result.total += (separators[i - 1] === '-' ? -1 : 1) * results[i];
+    result.total = +results[0];
+    for (let i = 1; i < results.length; i += 1) {
+      result.total += (separators[i - 1] === '-' ? -1 : 1) * results[i];
+    }
   }
   if (result.total < 1) result.total = 1;
 

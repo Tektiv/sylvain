@@ -3,6 +3,12 @@ const config = require('../.config');
 
 const randomOrg = new RandomOrg({ apiKey: config.randomApiKey });
 
+exports.game = {
+  info: {},
+  players: {},
+  characters: {},
+};
+
 /**
   * Returns a formatted string to display an array
   *
