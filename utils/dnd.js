@@ -112,9 +112,6 @@ exports.skills = {
   * @returns {Object} character - Active character of the user
   */
 exports.getCharacter = async (userId) => {
-  const players = await System.readFile('./data/player.json', true);
-  const characters = await System.readFile('./data/character.json', true);
-
   if (!Globals.objectIncludes(Globals.game.players, userId)) return -1;
   if (!Globals.game.players[userId].character) return 0;
   return Globals.game.players[userId].character;
