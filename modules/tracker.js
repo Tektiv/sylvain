@@ -62,6 +62,21 @@ const fightTracker = async (client, message) => {
     const indexNext = index === tracker.length - 1 ? 0 : index + 1;
     tracker[index].active = false;
     tracker[indexNext].active = true;
+  } else if (content.startsWith('remove ')) {
+    const removed = content.split(' ').map(r => r.toLowerCase());
+    removed.shift();
+    for (let i = 0; i < tracker.length; i += 1) {
+      if (removed.includes(tracker[i].name.toLowerCase())) {
+        if (tracker[i].active) {
+          try {
+            tracker[i + 1].active = true;
+          } catch (ex) {
+            tracker[0].active = true;
+          }
+        }
+        tracker.splice(i, 1);
+      }
+    }
   } else {
     tracker.length = 0;
     const elements = content.split(',').map(c => c.toLowerCase().trim());
