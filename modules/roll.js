@@ -42,7 +42,6 @@ const chooseForMe = async (client, message) => {
 const rollDice = async (client, message) => {
   let { content } = message;
   content = content.substring(`${Utils.prefix}roll `.length).trim();
-  const args = content.split(' ');
 
   const regex = /^(?:(?:\d+(?:d|D\d+|)|[a-zA-Z]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
   if (regex.test(content)) {
