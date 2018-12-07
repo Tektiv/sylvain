@@ -140,7 +140,7 @@ exports.getModif = value => Math.trunc(value / 2) - 5;
   */
 exports.roll = async (request, message) => {
   const elements = request.split(/[ +-]+/g);
-  if (request.endsWith('a') || request.endsWith('d')) elements.pop();
+  if (request.endsWith(' a') || request.endsWith(' d')) elements.pop();
   const separators = request.split('').filter(c => (c === ('+') || c === ('-'))).join('');
 
   const result = {
@@ -156,7 +156,6 @@ exports.roll = async (request, message) => {
       result.steps.push(`${element}`);
     } else if (/^(\d+)d(\d+)$/.test(element)) {
       const parts = element.match(/^(\d+)d(\d+)$/);
-      // eslint-disable-next-line no-await-in-loop
       const data = await Globals.random(1, parts[2], parts[1]);
 
       result.steps.push(`(${data.join(' + ')})`);
