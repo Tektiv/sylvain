@@ -47,10 +47,10 @@ const rollDice = async (client, message) => {
   if (regex.test(content)) {
     const roll = await Utils.roll(content, message);
     if (roll) {
-      if (content.endsWith('a') || content.endsWith('d')) {
+      if (content.endsWith(' a') || content.endsWith(' d')) {
         const roll2 = await Utils.roll(content, message);
         let winner = {};
-        if (content.endsWith('a')) {
+        if (content.endsWith(' a')) {
           winner = roll.total < roll2.total ? roll2 : roll;
         } else {
           winner = roll.total > roll2.total ? roll2 : roll;
