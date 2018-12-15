@@ -1,5 +1,4 @@
 const Globals = require('./global');
-const System = require('./system');
 
 // All the basic races and their related bonuses in stats
 exports.races = {
@@ -177,12 +176,13 @@ exports.roll = async (request, message) => {
     }
 
     if (separators[i]) result.steps.push(`${separators[i]}`);
-
-    result.total = +results[0];
-    for (let i = 1; i < results.length; i += 1) {
-      result.total += (separators[i - 1] === '-' ? -1 : 1) * results[i];
-    }
   }
+
+  result.total = +results[0];
+  for (let i = 1; i < results.length; i += 1) {
+    result.total += (separators[i - 1] === '-' ? -1 : 1) * results[i];
+  }
+
   if (result.total < 1) result.total = 1;
 
   return result;
