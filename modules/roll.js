@@ -43,7 +43,7 @@ const rollDice = async (client, message) => {
   let { content } = message;
   content = content.substring(`${Utils.prefix}roll `.length).trim();
 
-  const regex = /^(?:(?:\d+(?:d|D\d+|)|[a-zA-Z]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
+  const regex = /^(?:(?:\d+(?:d|D\d+|)|[a-zA-Z_]+)(?: *(?:\+|-) *)?)+(?: (?:a|d))?$/g;
   if (regex.test(content)) {
     const roll = await Utils.roll(content, message);
     if (roll) {
