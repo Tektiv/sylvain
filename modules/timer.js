@@ -21,7 +21,6 @@ const timer = async (client, message) => {
     time += +content;
   } else if (regex.test(content)) {
     const match = content.match(regex);
-    console.log(match);
     if (match[1] !== undefined) {
       time += +match[1] * 60;
     }
