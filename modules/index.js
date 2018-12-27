@@ -6,6 +6,7 @@ const modules = [
   './character',
   './roll',
   './tracker',
+  './timer',
 ];
 
 // For every module, we export every of its function as our own
