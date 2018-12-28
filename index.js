@@ -36,6 +36,11 @@ client.on('message', (message) => {
   (modules[command] || modules.default)(client, message);
 });
 
+// Triggered on errors (usually connection lost)
+client.on('error', (error) => {
+  console.log(error);
+});
+
 // Starts the bot using the token
 client.login(config.token);
 app.listen(process.env.PORT || config.port);
